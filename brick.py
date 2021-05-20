@@ -19,12 +19,9 @@ y = 250
 rad = 30
 radcontrol = True
 
-# Run until the user asks to quit
 running = True
 while running:
-    clock.tick(FPS)
-
-    # Did the user click the window close button?
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -34,16 +31,13 @@ while running:
 
     #rad moviment 
     
-    if radcontrol == True:
-        rad = rad + 1
-    else: 
-        rad = rad - 1
+   
 
     if rad > 50: 
-        radcontrol = False 
+        rad-- 
 
-    if rad < 10: 
-        radcontrol = True 
+    elif rad < 10: 
+        rad++
 
     # motion
     if forward == True:
@@ -56,22 +50,17 @@ while running:
     if x >= WIDTH - rad: 
         forward = False 
 
-    if x <= rad: 
+    elif x <= rad: 
         forward = True  
 
     if y >= HEIGHT - rad:
         forward = False
 
-    if y <= rad:
+    elif y <= rad:
         forward = True     
 
-    # if keystate [pygame.K_SPACE]: 
-    #     rad = rad + 1 
-    # else: 
-    #     rad =rad - 1    
 
-
-    pygame.draw.circle(screen, (0, 25, 0), (x, y), rad)
+    pygame.draw.circle(screen, (25, 25, 25), (x, y), rad)
 
     # Flip the display
     pygame.display.flip()
