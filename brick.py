@@ -1,27 +1,30 @@
 # Simple pygame program
 
 # Import and initialize the pygame library
-import pygame
+import pygame 
+from random import randint
 pygame.init()
 
 # Set up the drawing window
 WIDTH = 600
 HEIGHT = 600
 screen = pygame.display.set_mode([WIDTH, HEIGHT ])
-
-FPS=60 
+s = pygame.mixer.Sound('boom.mp3')
+FPS = 60 
+A = True
 clock = pygame.time.Clock()
-calor = True
-forward = True 
-
+Dx = - 1
+Dy = 3
+run = True
+r = 1
+g = 1
+b = 1
 x = 250
 y = 250
 rad = 30
-radcontrol = True
 
 # Run until the user asks to quit
-running = True
-while running:
+while run :
     clock.tick(FPS)
 
     # Did the user click the window close button?
@@ -32,46 +35,64 @@ while running:
     # Fill the background with white
     screen.fill((255, 255, 255))
 
-    #rad moviment 
-    
-    if radcontrol == True:
-        rad = rad + 1
-    else: 
-        rad = rad - 1
-
-    if rad > 50: 
-        radcontrol = False 
-
-    if rad < 10: 
-        radcontrol = True 
-
     # motion
-    if forward == True:
-        x = x + 1
-        y = y + 1
+    if A == True: 
+       x = x + Dx
+       y = y + Dy
     else:
-        x = x - 1 
-        y = y - 1
+       x = x
+       y = y
 
-    if x >= WIDTH - rad: 
-        forward = False 
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.button == 1:
+            A = False
 
-    if x <= rad: 
-        forward = True  
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.button == 3:
+            A = True
 
-    if y >= HEIGHT - rad:
-        forward = False
+    if x >= WIDTH - rad - 10:
+        s.play()
+        Dx = - 1
+        print('boom')
+        r = randint(0,255)
+        g = randint(0,255)
+        b = randint(0,255)
+        
+    if x <= rad + 10: 
+        s.play()
+        Dx = 1 
+        print('boom')
+        r = randint(0,255)
+        g = randint(0,255)
+        b = randint(0,255)
 
-    if y <= rad:
-        forward = True     
+    if y >= HEIGHT - rad - 10:
+        s.play()
+        Dy = - 3
+        print('boom')
+        r = randint(0,255)
+        g = randint(0,255)
+        b = randint(0,255)
+        
+    if y <= rad + 10:
+        s.play()
+        Dy =  3  
+        print('boom')
+        r = randint(0,255)
+        g = randint(0,255)
+        b = randint(0,255)
 
-    # if keystate [pygame.K_SPACE]: 
-    #     rad = rad + 1 
-    # else: 
-    #     rad =rad - 1    
 
+    pygame.draw.circle(screen, (r, g, b), (x, y), rad)
 
-    pygame.draw.circle(screen, (0, 25, 0), (x, y), rad)
+    pygame.draw.line( screen, (100, 50, 250), [0, 0], [0, WIDTH], 15)
+
+    pygame.draw.line( screen, (100, 50, 250), [0, WIDTH], [WIDTH, HEIGHT], 15)
+
+    pygame.draw.line( screen, (100, 50, 250), [WIDTH, HEIGHT], [HEIGHT, 0 ], 15)
+
+    pygame.draw.line( screen, (100, 50, 250), [HEIGHT, 0], [0, 0 ], 15)
 
     # Flip the display
     pygame.display.flip()
