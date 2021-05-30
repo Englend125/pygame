@@ -43,13 +43,11 @@ while run :
        x = x
        y = y
 
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        if event.button == 1:
-            A = False
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+       A = False
 
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        if event.button == 3:
-            A = True
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+       A = True
 
     if x >= WIDTH - rad - 10:
         s.play()
